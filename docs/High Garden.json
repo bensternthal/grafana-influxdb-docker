@@ -115,6 +115,40 @@
                   "value": "office"
                 }
               ]
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [
+                {
+                  "key": "location",
+                  "operator": "=",
+                  "value": "livingroom"
+                }
+              ],
+              "groupBy": [
+                {
+                  "type": "tag",
+                  "params": [
+                    "location"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "temperature"
+                    ]
+                  }
+                ]
+              ],
+              "refId": "B",
+              "measurement": "weather",
+              "alias": "Living Room",
+              "hide": false
             }
           ],
           "timeFrom": null,
@@ -222,6 +256,39 @@
                   "value": "office"
                 }
               ]
+            },
+            {
+              "policy": "default",
+              "dsType": "influxdb",
+              "resultFormat": "time_series",
+              "tags": [
+                {
+                  "key": "location",
+                  "operator": "=",
+                  "value": "livingroom"
+                }
+              ],
+              "groupBy": [
+                {
+                  "type": "tag",
+                  "params": [
+                    "location"
+                  ]
+                }
+              ],
+              "select": [
+                [
+                  {
+                    "type": "field",
+                    "params": [
+                      "humidity"
+                    ]
+                  }
+                ]
+              ],
+              "refId": "A",
+              "measurement": "weather",
+              "alias": "Living Room"
             }
           ],
           "timeFrom": null,
@@ -475,7 +542,7 @@
     }
   ],
   "time": {
-    "from": "now-5m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -511,7 +578,7 @@
   },
   "refresh": "5s",
   "schemaVersion": 12,
-  "version": 18,
+  "version": 5,
   "links": [],
   "gnetId": null
 }
