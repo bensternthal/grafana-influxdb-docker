@@ -56,6 +56,7 @@
             "threshold2": null,
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
+          "hideTimeOverride": false,
           "id": 1,
           "isNew": true,
           "legend": {
@@ -72,10 +73,20 @@
           "links": [],
           "nullPointMode": "connected",
           "percentage": false,
-          "pointradius": 5,
+          "pointradius": 1,
           "points": false,
           "renderer": "flot",
-          "seriesOverrides": [],
+          "seriesOverrides": [
+            {
+              "alias": "Heating",
+              "color": "#BF1B00",
+              "fill": 5,
+              "linewidth": 0,
+              "steppedLine": true,
+              "yaxis": 2,
+              "zindex": -1
+            }
+          ],
           "span": 6,
           "stack": false,
           "steppedLine": false,
@@ -117,38 +128,113 @@
               ]
             },
             {
-              "policy": "default",
+              "alias": "Living Room",
               "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "location"
+                  ],
+                  "type": "tag"
+                }
+              ],
+              "hide": false,
+              "measurement": "weather",
+              "policy": "default",
+              "refId": "B",
               "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "temperature"
+                    ],
+                    "type": "field"
+                  }
+                ]
+              ],
               "tags": [
                 {
                   "key": "location",
                   "operator": "=",
                   "value": "livingroom"
                 }
-              ],
-              "groupBy": [
-                {
-                  "type": "tag",
-                  "params": [
-                    "location"
-                  ]
-                }
-              ],
+              ]
+            },
+            {
+              "alias": "97214",
+              "dsType": "influxdb",
+              "groupBy": [],
+              "hide": false,
+              "measurement": "weather.wunderground",
+              "policy": "default",
+              "query": "SELECT \"temperature\" FROM \"weather.wunderground\" WHERE \"location\" = '97214' AND $timeFilter GROUP BY \"location\"",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
               "select": [
                 [
                   {
-                    "type": "field",
                     "params": [
                       "temperature"
-                    ]
+                    ],
+                    "type": "field"
                   }
                 ]
               ],
-              "refId": "B",
+              "tags": [
+                {
+                  "key": "location",
+                  "operator": "=",
+                  "value": "97214"
+                }
+              ]
+            },
+            {
+              "alias": "Heating",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "none"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
               "measurement": "weather",
-              "alias": "Living Room",
-              "hide": false
+              "policy": "default",
+              "query": "SELECT last(\"heater_on\") FROM \"weather\" WHERE \"location\" = 'livingroom' AND $timeFilter GROUP BY time($interval) fill(none)",
+              "rawQuery": false,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "heater_on"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "location",
+                  "operator": "=",
+                  "value": "livingroom"
+                }
+              ]
             }
           ],
           "timeFrom": null,
@@ -258,37 +344,78 @@
               ]
             },
             {
-              "policy": "default",
+              "alias": "Living Room",
               "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "location"
+                  ],
+                  "type": "tag"
+                }
+              ],
+              "measurement": "weather",
+              "policy": "default",
+              "refId": "A",
               "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "humidity"
+                    ],
+                    "type": "field"
+                  }
+                ]
+              ],
               "tags": [
                 {
                   "key": "location",
                   "operator": "=",
                   "value": "livingroom"
                 }
-              ],
+              ]
+            },
+            {
+              "alias": "97214",
+              "dsType": "influxdb",
               "groupBy": [
                 {
-                  "type": "tag",
                   "params": [
-                    "location"
-                  ]
+                    "auto"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "none"
+                  ],
+                  "type": "fill"
                 }
               ],
+              "measurement": "weather.wunderground",
+              "policy": "default",
+              "query": "SELECT \"humidity\" FROM \"weather.wunderground\" WHERE \"location\" = '97214' AND $timeFilter GROUP BY \"location\"",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
               "select": [
                 [
                   {
-                    "type": "field",
                     "params": [
                       "humidity"
-                    ]
+                    ],
+                    "type": "field"
                   }
                 ]
               ],
-              "refId": "A",
-              "measurement": "weather",
-              "alias": "Living Room"
+              "tags": [
+                {
+                  "key": "location",
+                  "operator": "=",
+                  "value": "97214"
+                }
+              ]
             }
           ],
           "timeFrom": null,
@@ -459,7 +586,7 @@
             "values": false
           },
           "lines": true,
-          "linewidth": 2,
+          "linewidth": 1,
           "links": [],
           "nullPointMode": "connected",
           "percentage": false,
@@ -576,9 +703,9 @@
   "annotations": {
     "list": []
   },
-  "refresh": "5s",
+  "refresh": "5m",
   "schemaVersion": 12,
-  "version": 5,
+  "version": 14,
   "links": [],
   "gnetId": null
 }
