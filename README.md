@@ -24,15 +24,5 @@ Usernames and passwords below are just examples.
 
 # Import Dashboard
 
-1. Import from json file located in /docs
+1. Import from json file located in /docs, note your db name is probably not 'highgarden' so ymmv :)
 
-
-I think we want 3 services:
-
-1. Grafana & Influx DB
-2. Nest.
-3. TFWS. fix naming of db
-
-
-
-TODOs
