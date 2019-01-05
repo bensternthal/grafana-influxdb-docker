@@ -2,11 +2,11 @@ version: '2'
 
 services:
   influxdb:
-    image: influxdb:0.13
+    image: influxdb:1.5
     environment:
       INFLUXDB_HTTP_AUTH_ENABLED: 'true'
     volumes:
-      - ./influxdb:/var/lib/influxdb
+      - ./influxdb-upgrade:/var/lib/influxdb
     ports:
       - '8083:8083'
       - '8086:8086'
@@ -17,7 +17,7 @@ services:
     # - '8086'
 
   grafana:
-    image: grafana/grafana:4.2.0
+    image: grafana/grafana:5.4.2
     links:
       - influxdb
     volumes:
@@ -29,13 +29,10 @@ services:
       GF_SECURITY_ADMIN_USER: '${GF_ADMIN_USER}'
       GF_SECURITY_ADMIN_PASSWORD: '${GF_ADMIN_PASSWORD}'
       GF_USERS_ALLOW_SIGN_UP: 'false'
-      LETSENCRYPT_HOST: '${LETSENCRYPT_HOST}'
-      LETSENCRYPT_EMAIL: '${LETSENCRYPT_EMAIL}'
-      VIRTUAL_HOST: '${VIRTUAL_HOST}'
-      VIRTUAL_PORT: '${VIRTUAL_PORT}'
-    #ports:
-    #  - '3001:3000'
-    expose:
-      - '3000'
+    ports:
+      - '3001:3000'
+    #expose:
+      #- '3000'
+    user: "104"
     network_mode: "bridge"
     restart: always
